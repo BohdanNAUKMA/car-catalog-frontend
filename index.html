@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="uk">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AutoHub — Каталог автомобілів</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <header class="header">
+        <div class="container">
+            <h1 class="logo">Auto<span>Hub</span></h1>
+            <p class="tagline">Каталог автомобілів</p>
+        </div>
+    </header>
+
+    <main class="container">
+        <form id="filters" class="filters">
+            <input id="search" type="search" placeholder="Пошук за моделлю…" aria-label="Пошук за моделлю">
+            <select id="fuelType" aria-label="Тип палива">
+                <option value="">Усі типи палива</option>
+                <option value="petrol">Бензин</option>
+                <option value="diesel">Дизель</option>
+                <option value="electric">Електро</option>
+                <option value="hybrid">Гібрид</option>
+            </select>
+            <select id="sort" aria-label="Сортування">
+                <option value="">Спочатку нові</option>
+                <option value="price_asc">Ціна: за зростанням</option>
+                <option value="price_desc">Ціна: за спаданням</option>
+                <option value="year_desc">Рік: новіші</option>
+                <option value="mileage_asc">Пробіг: менший</option>
+            </select>
+            <button type="submit">Знайти</button>
+        </form>
+
+        <p id="status" class="status" role="status">Завантаження…</p>
+        <section id="cars" class="cars-grid" aria-live="polite"></section>
+    </main>
+
+    <footer class="footer">
+        <div class="container">API: <code>http://127.0.0.1:8000/api/v1/</code></div>
+    </footer>
+
+    <script src="app.js"></script>
+</body>
+</html>
