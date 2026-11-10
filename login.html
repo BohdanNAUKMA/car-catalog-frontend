@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="uk">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AutoHub — Вхід</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <header class="header">
+        <div class="container header-inner">
+            <a class="logo" href="index.html">Auto<span>Hub</span></a>
+            <nav id="nav" class="nav" aria-label="Основна навігація"></nav>
+        </div>
+    </header>
+
+    <main class="container">
+        <section class="form-card">
+            <h1 class="page-title">Вхід</h1>
+            <p id="login-hint" class="form-hint" hidden>Щоб продовжити, увійдіть у свій обліковий запис.</p>
+
+            <form id="login-form" class="form" novalidate>
+                <div class="form-message" role="alert"></div>
+
+                <label class="field">
+                    <span>Ім'я користувача (username)</span>
+                    <input name="username" type="text" autocomplete="username" maxlength="150" required>
+                    <small class="field-error" data-error-for="username"></small>
+                </label>
+
+                <label class="field">
+                    <span>Пароль</span>
+                    <input name="password" type="password" autocomplete="current-password" maxlength="128" required>
+                    <small class="field-error" data-error-for="password"></small>
+                </label>
+
+                <button type="submit" class="button button-block">Увійти</button>
+            </form>
+
+            <p class="form-footer">Немає облікового запису? <a id="register-link" href="register.html">Зареєструватися</a></p>
+        </section>
+    </main>
+
+    <script type="module" src="login.js"></script>
+</body>
+</html>

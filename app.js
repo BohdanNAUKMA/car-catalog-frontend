@@ -1,4 +1,5 @@
-const API_URL = "http://127.0.0.1:8000/api/v1/cars/";
+import { apiFetch, describeError, session } from "./api.js";
+import { renderHeader, syncCurrentUser } from "./auth.js";
 
 const FUEL_LABELS = {
     petrol: "Бензин",
@@ -36,6 +37,8 @@ const priceFormatter = new Intl.NumberFormat("uk-UA", {
 });
 const numberFormatter = new Intl.NumberFormat("uk-UA");
 
+let totalItems = 0;
+
 function setStatus(message, isError = false) {
     statusElement.textContent = message;
     statusElement.classList.toggle("error", isError);
@@ -72,6 +75,23 @@ function createImage(car) {
     return wrapper;
 }
 
+async function deleteCar(car, card, button) {
+    const title = `${car.brand.name} ${car.model}`;
+    if (!window.confirm(`Видалити «${title}» з каталогу?`)) {
+        return;
+    }
+    button.disabled = true;
+    try {
+        await apiFetch(`/cars/${car.id}/`, { method: "DELETE", auth: true });
+        card.remove();
+        totalItems -= 1;
+        setStatus(`Автомобіль «${title}» видалено. Залишилось: ${totalItems}`);
+    } catch (error) {
+        button.disabled = false;
+        setStatus(`Не вдалося видалити: ${describeError(error)}`, true);
+    }
+}
+
 function createCarCard(car) {
     const card = createElement("article", "car-card");
     const body = createElement("div", "car-body");
@@ -83,41 +103,45 @@ function createCarCard(car) {
     );
 
     const specs = createElement("ul", "car-specs");
-    const specValues = [
+    [
         `${car.year} р.`,
         `${numberFormatter.format(car.mileage)} км`,
         FUEL_LABELS[car.fuelType],
         BODY_LABELS[car.bodyType],
         TRANSMISSION_LABELS[car.transmission],
-    ];
-    specValues
+    ]
         .filter(Boolean)
         .forEach((value) => specs.append(createElement("li", "", value)));
 
-    const price = createElement(
-        "p",
-        "car-price",
-        priceFormatter.format(car.price),
-    );
+    const footer = createElement("div", "car-footer");
+    footer.append(createElement("p", "car-price", priceFormatter.format(car.price)));
 
-    body.append(title, specs, price);
+    if (session.isAuthenticated()) {
+        const deleteButton = createElement("button", "button button-danger", "Видалити");
+        deleteButton.type = "button";
+        deleteButton.addEventListener("click", () => deleteCar(car, card, deleteButton));
+        footer.append(deleteButton);
+    }
+
+    body.append(title, specs, footer);
     card.append(createImage(car), body);
     return card;
 }
 
-function buildUrl() {
-    const url = new URL(API_URL);
-    const params = {
+function buildQuery() {
+    const params = new URLSearchParams();
+    const values = {
         search: document.getElementById("search").value.trim(),
         fuelType: document.getElementById("fuelType").value,
         sort: document.getElementById("sort").value,
     };
-    Object.entries(params).forEach(([key, value]) => {
+    Object.entries(values).forEach(([key, value]) => {
         if (value) {
-            url.searchParams.set(key, value);
+            params.set(key, value);
         }
     });
-    return url;
+    const query = params.toString();
+    return query ? `?${query}` : "";
 }
 
 async function loadCars() {
@@ -125,26 +149,18 @@ async function loadCars() {
     carsContainer.replaceChildren();
 
     try {
-        const response = await fetch(buildUrl());
-        const payload = await response.json();
+        const payload = await apiFetch(`/cars/${buildQuery()}`);
+        totalItems = payload.pagination.totalItems;
 
-        if (!response.ok) {
-            throw new Error(payload.error || `HTTP ${response.status}`);
-        }
-
-        const cars = payload.data;
-        if (cars.length === 0) {
+        if (payload.data.length === 0) {
             setStatus("Автомобілів за вашим запитом не знайдено.");
             return;
         }
 
-        carsContainer.append(...cars.map(createCarCard));
-        setStatus(`Знайдено автомобілів: ${payload.pagination.totalItems}`);
+        carsContainer.append(...payload.data.map(createCarCard));
+        setStatus(`Знайдено автомобілів: ${totalItems}`);
     } catch (error) {
-        const message = error instanceof TypeError
-            ? "Не вдалося підключитися до сервера. Переконайтеся, що бекенд запущено на http://127.0.0.1:8000."
-            : `Помилка завантаження: ${error.message}`;
-        setStatus(message, true);
+        setStatus(`Помилка завантаження: ${describeError(error)}`, true);
     }
 }
 
@@ -153,4 +169,10 @@ filtersForm.addEventListener("submit", (event) => {
     loadCars();
 });
 
-document.addEventListener("DOMContentLoaded", loadCars);
+renderHeader();
+loadCars();
+syncCurrentUser().then(() => {
+    if (!session.isAuthenticated()) {
+        carsContainer.querySelectorAll(".button-danger").forEach((button) => button.remove());
+    }
+});

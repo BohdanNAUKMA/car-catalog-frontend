@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="uk">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AutoHub — Реєстрація</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <header class="header">
+        <div class="container header-inner">
+            <a class="logo" href="index.html">Auto<span>Hub</span></a>
+            <nav id="nav" class="nav" aria-label="Основна навігація"></nav>
+        </div>
+    </header>
+
+    <main class="container">
+        <section class="form-card">
+            <h1 class="page-title">Реєстрація</h1>
+
+            <form id="register-form" class="form" novalidate>
+                <div class="form-message" role="alert"></div>
+
+                <label class="field">
+                    <span>Ім'я користувача (username) <b class="required">*</b></span>
+                    <input name="username" type="text" autocomplete="username" maxlength="150" required>
+                    <small class="field-hint">До 150 символів: літери, цифри та @ . + - _</small>
+                    <small class="field-error" data-error-for="username"></small>
+                </label>
+
+                <label class="field">
+                    <span>Email <b class="required">*</b></span>
+                    <input name="email" type="email" autocomplete="email" maxlength="254" required>
+                    <small class="field-error" data-error-for="email"></small>
+                </label>
+
+                <div class="field-row">
+                    <label class="field">
+                        <span>Ім'я</span>
+                        <input name="first_name" type="text" autocomplete="given-name" maxlength="150">
+                        <small class="field-error" data-error-for="first_name"></small>
+                    </label>
+
+                    <label class="field">
+                        <span>Прізвище</span>
+                        <input name="last_name" type="text" autocomplete="family-name" maxlength="150">
+                        <small class="field-error" data-error-for="last_name"></small>
+                    </label>
+                </div>
+
+                <label class="field">
+                    <span>Пароль <b class="required">*</b></span>
+                    <input name="password" type="password" autocomplete="new-password" minlength="8" maxlength="128" required>
+                    <small class="field-hint">Щонайменше 8 символів, не лише цифри.</small>
+                    <small class="field-error" data-error-for="password"></small>
+                </label>
+
+                <label class="field">
+                    <span>Підтвердження пароля <b class="required">*</b></span>
+                    <input name="password_confirm" type="password" autocomplete="new-password" maxlength="128" required>
+                    <small class="field-error" data-error-for="password_confirm"></small>
+                </label>
+
+                <button type="submit" class="button button-block">Зареєструватися</button>
+            </form>
+
+            <p class="form-footer">Вже маєте обліковий запис? <a id="login-link" href="login.html">Увійти</a></p>
+        </section>
+    </main>
+
+    <script type="module" src="register.js"></script>
+</body>
+</html>
