@@ -7,6 +7,9 @@
     --accent-dark: #1d4ed8;
     --border: #e5e7eb;
     --danger: #b91c1c;
+    --danger-bg: #fef2f2;
+    --success: #15803d;
+    --success-bg: #f0fdf4;
     --radius: 12px;
 }
 
@@ -26,6 +29,11 @@ body {
 
 main {
     flex: 1;
+    padding-bottom: 32px;
+}
+
+a {
+    color: var(--accent);
 }
 
 .container {
@@ -36,22 +44,112 @@ main {
 .header {
     background: #0f172a;
     color: #fff;
-    padding: 24px 0;
+    padding: 16px 0;
     margin-bottom: 24px;
 }
 
+.header-inner {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    gap: 12px;
+}
+
 .logo {
-    margin: 0;
-    font-size: 28px;
+    font-size: 26px;
+    font-weight: 700;
+    color: #fff;
+    text-decoration: none;
 }
 
 .logo span {
     color: #60a5fa;
 }
 
-.tagline {
-    margin: 4px 0 0;
+.nav {
+    display: flex;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 12px;
+}
+
+.nav-link {
     color: #cbd5e1;
+    text-decoration: none;
+    font-weight: 500;
+}
+
+.nav-link:hover {
+    color: #fff;
+}
+
+.nav-user {
+    color: #fff;
+    font-weight: 600;
+    padding-left: 12px;
+    border-left: 1px solid #334155;
+}
+
+.nav-user::before {
+    content: "👤 ";
+}
+
+.page-title {
+    margin: 0 0 16px;
+    font-size: 26px;
+}
+
+.button {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    padding: 9px 16px;
+    border: 1px solid var(--accent);
+    border-radius: 8px;
+    background: var(--accent);
+    color: #fff;
+    font: inherit;
+    font-size: 15px;
+    text-decoration: none;
+    cursor: pointer;
+    transition: background 0.15s ease;
+}
+
+.button:hover {
+    background: var(--accent-dark);
+}
+
+.button:disabled {
+    opacity: 0.6;
+    cursor: not-allowed;
+}
+
+.button-ghost {
+    background: transparent;
+    border-color: #475569;
+    color: #e2e8f0;
+}
+
+.button-ghost:hover {
+    background: #1e293b;
+}
+
+.button-danger {
+    background: var(--surface);
+    border-color: #fecaca;
+    color: var(--danger);
+    padding: 6px 12px;
+    font-size: 14px;
+}
+
+.button-danger:hover {
+    background: var(--danger-bg);
+}
+
+.button-block {
+    width: 100%;
+    padding: 12px;
 }
 
 .filters {
@@ -62,8 +160,7 @@ main {
 }
 
 .filters input,
-.filters select,
-.filters button {
+.filters select {
     padding: 10px 14px;
     border: 1px solid var(--border);
     border-radius: 8px;
@@ -73,17 +170,6 @@ main {
 
 .filters input {
     flex: 1 1 240px;
-}
-
-.filters button {
-    background: var(--accent);
-    border-color: var(--accent);
-    color: #fff;
-    cursor: pointer;
-}
-
-.filters button:hover {
-    background: var(--accent-dark);
 }
 
 .status {
@@ -100,7 +186,6 @@ main {
     display: grid;
     grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
     gap: 20px;
-    padding-bottom: 32px;
 }
 
 .car-card {
@@ -170,11 +255,124 @@ main {
     color: var(--muted);
 }
 
-.car-price {
+.car-footer {
     margin-top: auto;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 8px;
+}
+
+.car-price {
+    margin: 0;
     font-size: 20px;
     font-weight: 700;
     color: var(--accent);
+}
+
+.form-card {
+    max-width: 460px;
+    margin: 0 auto;
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    padding: 28px;
+}
+
+.form-card-wide {
+    max-width: 760px;
+}
+
+.form {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+}
+
+.form-hint {
+    margin: -8px 0 16px;
+    color: var(--muted);
+}
+
+.form-footer {
+    margin: 16px 0 0;
+    text-align: center;
+    color: var(--muted);
+}
+
+.form-message:empty {
+    display: none;
+}
+
+.form-message {
+    padding: 10px 14px;
+    border-radius: 8px;
+    font-size: 14px;
+}
+
+.form-message.error {
+    background: var(--danger-bg);
+    color: var(--danger);
+}
+
+.form-message.success {
+    background: var(--success-bg);
+    color: var(--success);
+}
+
+.field {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+    flex: 1 1 180px;
+    font-size: 14px;
+    font-weight: 500;
+}
+
+.field-row {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 16px;
+}
+
+.field input,
+.field select,
+.field textarea {
+    padding: 10px 12px;
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    font: inherit;
+    font-weight: 400;
+    background: var(--surface);
+}
+
+.field input:focus,
+.field select:focus,
+.field textarea:focus {
+    outline: 2px solid #bfdbfe;
+    border-color: var(--accent);
+}
+
+.field .invalid {
+    border-color: var(--danger);
+}
+
+.field-hint {
+    color: var(--muted);
+    font-weight: 400;
+}
+
+.field-error {
+    color: var(--danger);
+    font-weight: 400;
+}
+
+.field-error:empty {
+    display: none;
+}
+
+.required {
+    color: var(--danger);
 }
 
 .footer {

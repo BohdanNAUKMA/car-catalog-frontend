@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="uk">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AutoHub — Додати автомобіль</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <header class="header">
+        <div class="container header-inner">
+            <a class="logo" href="index.html">Auto<span>Hub</span></a>
+            <nav id="nav" class="nav" aria-label="Основна навігація"></nav>
+        </div>
+    </header>
+
+    <main class="container">
+        <section class="form-card form-card-wide">
+            <h1 class="page-title">Додати автомобіль</h1>
+            <p class="form-hint">Сторінка доступна лише авторизованим користувачам.</p>
+
+            <form id="car-form" class="form" novalidate>
+                <div class="form-message" role="alert"></div>
+
+                <div class="field-row">
+                    <label class="field">
+                        <span>Бренд <b class="required">*</b></span>
+                        <select name="brandId" required>
+                            <option value="">Завантаження брендів…</option>
+                        </select>
+                        <small class="field-error" data-error-for="brandId"></small>
+                    </label>
+
+                    <label class="field">
+                        <span>Модель <b class="required">*</b></span>
+                        <input name="model" type="text" maxlength="100" required>
+                        <small class="field-error" data-error-for="model"></small>
+                    </label>
+                </div>
+
+                <div class="field-row">
+                    <label class="field">
+                        <span>Рік випуску <b class="required">*</b></span>
+                        <input name="year" type="number" min="1886" step="1" required>
+                        <small class="field-error" data-error-for="year"></small>
+                    </label>
+
+                    <label class="field">
+                        <span>Ціна, $ <b class="required">*</b></span>
+                        <input name="price" type="number" min="0" step="0.01" required>
+                        <small class="field-error" data-error-for="price"></small>
+                    </label>
+
+                    <label class="field">
+                        <span>Пробіг, км <b class="required">*</b></span>
+                        <input name="mileage" type="number" min="0" step="1" required>
+                        <small class="field-error" data-error-for="mileage"></small>
+                    </label>
+                </div>
+
+                <div class="field-row">
+                    <label class="field">
+                        <span>Тип кузова</span>
+                        <select name="bodyType">
+                            <option value="">Не вказано</option>
+                            <option value="sedan">Седан</option>
+                            <option value="suv">Кросовер</option>
+                            <option value="hatchback">Хетчбек</option>
+                            <option value="wagon">Універсал</option>
+                            <option value="coupe">Купе</option>
+                            <option value="convertible">Кабріолет</option>
+                            <option value="minivan">Мінівен</option>
+                            <option value="pickup">Пікап</option>
+                        </select>
+                        <small class="field-error" data-error-for="bodyType"></small>
+                    </label>
+
+                    <label class="field">
+                        <span>Тип палива</span>
+                        <select name="fuelType">
+                            <option value="">Не вказано</option>
+                            <option value="petrol">Бензин</option>
+                            <option value="diesel">Дизель</option>
+                            <option value="electric">Електро</option>
+                            <option value="hybrid">Гібрид</option>
+                        </select>
+                        <small class="field-error" data-error-for="fuelType"></small>
+                    </label>
+
+                    <label class="field">
+                        <span>Коробка передач</span>
+                        <select name="transmission">
+                            <option value="">Не вказано</option>
+                            <option value="manual">Механічна</option>
+                            <option value="automatic">Автоматична</option>
+                            <option value="robotic">Роботизована</option>
+                            <option value="cvt">Варіатор</option>
+                        </select>
+                        <small class="field-error" data-error-for="transmission"></small>
+                    </label>
+                </div>
+
+                <label class="field">
+                    <span>Посилання на фото</span>
+                    <input name="imageUrl" type="url" maxlength="500" placeholder="https://…">
+                    <small class="field-error" data-error-for="imageUrl"></small>
+                </label>
+
+                <label class="field">
+                    <span>Опис</span>
+                    <textarea name="description" rows="4"></textarea>
+                    <small class="field-error" data-error-for="description"></small>
+                </label>
+
+                <button type="submit" class="button button-block">Додати автомобіль</button>
+            </form>
+        </section>
+    </main>
+
+    <script type="module" src="add-car.js"></script>
+</body>
+</html>

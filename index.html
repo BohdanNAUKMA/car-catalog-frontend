@@ -8,13 +8,15 @@
 </head>
 <body>
     <header class="header">
-        <div class="container">
-            <h1 class="logo">Auto<span>Hub</span></h1>
-            <p class="tagline">Каталог автомобілів</p>
+        <div class="container header-inner">
+            <a class="logo" href="index.html">Auto<span>Hub</span></a>
+            <nav id="nav" class="nav" aria-label="Основна навігація"></nav>
         </div>
     </header>
 
     <main class="container">
+        <h1 class="page-title">Каталог автомобілів</h1>
+
         <form id="filters" class="filters">
             <input id="search" type="search" placeholder="Пошук за моделлю…" aria-label="Пошук за моделлю">
             <select id="fuelType" aria-label="Тип палива">
@@ -31,7 +33,7 @@
                 <option value="year_desc">Рік: новіші</option>
                 <option value="mileage_asc">Пробіг: менший</option>
             </select>
-            <button type="submit">Знайти</button>
+            <button type="submit" class="button">Знайти</button>
         </form>
 
         <p id="status" class="status" role="status">Завантаження…</p>
@@ -42,6 +44,6 @@
         <div class="container">API: <code>http://127.0.0.1:8000/api/v1/</code></div>
     </footer>
 
-    <script src="app.js"></script>
+    <script type="module" src="app.js"></script>
 </body>
 </html>
